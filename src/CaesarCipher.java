@@ -55,12 +55,17 @@ public class CaesarCipher extends AbstractCipher implements Cipher {
     // testing: we need an encryptText, decryptText, encryptFile, decryptFile.
     // it is very simple to
 
-    public void encryptText(String text, OutputStream out) {
+    public void encryptText(String text, OutputStream out) throws IOException {
+        // if (out instanceof FileOutputStream) todo: ooh very cool idea, check first before using (out) or somethign
         try {
             byte[] encryptedBytes = encrypt(text).getBytes(StandardCharsets.UTF_8);
             out.write(encryptedBytes);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+        // i can probabli take out the try catch
+        if (out instanceof FileOutputStream) {
+            out.close();
         }
     }
 
@@ -73,16 +78,22 @@ public class CaesarCipher extends AbstractCipher implements Cipher {
         }
     }
 
-//    public void encryptFile(InputStream in, OutputStream out) {
-//        try (in) {
-//            byte[] encryptedBytes = encrypt(text).getBytes(StandardCharsets.UTF_8);
-//            out.write(encryptedBytes);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
-    public void encrypt(InputStream in, OutputStream out) {
-
+    public void encryptFile(InputStream in, OutputStream out) {
+        try (in) {
+            byte[] encryptedBytes = encrypt(new String(in.readAllBytes(), StandardCharsets.UTF_8)).getBytes(StandardCharsets.UTF_8);
+            out.write(encryptedBytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+    public void decryptFile(InputStream in, OutputStream out) {
+        try (in) {
+            byte[] encryptedBytes = decrypt(new String(in.readAllBytes(), StandardCharsets.UTF_8)).getBytes(StandardCharsets.UTF_8);
+            out.write(encryptedBytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

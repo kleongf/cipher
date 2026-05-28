@@ -49,6 +49,9 @@ void main() throws IOException {
     caesar.save("caesar.txt");
 
     caesar.encryptText("hallo world", System.out);
+    caesar.encryptText("hallo world", new FileOutputStream("encryptedhalloworld.txt"));
+
+    caesar.decryptFile(new FileInputStream("encryptedhalloworld.txt"), new FileOutputStream("decryptedhalloworld.txt"));
 
 //    • --caesar <shift_param>: Create a new Caesar cipher with the given integer shift parameter.
 //• --random: Create a new monoalphabetic substitution cipher with a randomly chosen permutation of the
