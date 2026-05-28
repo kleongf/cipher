@@ -29,13 +29,10 @@ public class RSACipher extends AbstractCipher implements Cipher {
                 this.n = this.p.multiply(this.q);
                 this.totient = this.p.subtract(BigInteger.ONE).multiply(this.q.subtract(BigInteger.ONE));
                 this.d = e.modInverse(totient);
-                break;
+                return;
             }
         }
-        // maybe throw some error???? unable to find x... in iterations. or put in while loop idk
-        this.n = this.p.multiply(this.q);
-        this.totient = this.p.subtract(BigInteger.ONE).multiply(this.q.subtract(BigInteger.ONE));
-        this.d = e.modInverse(totient);
+        throw new IllegalStateException("Maximum of " + maxIterations + " iterations reached");
     }
 
 
@@ -128,7 +125,12 @@ public class RSACipher extends AbstractCipher implements Cipher {
 
     @Override
     public void save(String fileName) throws IOException {
-        String content = "RSA" + System.lineSeparator() + d + System.lineSeparator() + e + System.lineSeparator() + n;
+        String content =
+                "RSA" +
+                System.lineSeparator() +
+                        d + System.lineSeparator() +
+                        e + System.lineSeparator() +
+                        n;
         writeFile(fileName, content);
     }
 }

@@ -1,4 +1,6 @@
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class CaesarCipher extends AbstractCipher implements Cipher {
     private final int shiftParam;
@@ -48,5 +50,39 @@ public class CaesarCipher extends AbstractCipher implements Cipher {
 
         String content = "MONO" + System.lineSeparator() + encryptedAlphabet;
         writeFile(fileName, content);
+    }
+
+    // testing: we need an encryptText, decryptText, encryptFile, decryptFile.
+    // it is very simple to
+
+    public void encryptText(String text, OutputStream out) {
+        try {
+            byte[] encryptedBytes = encrypt(text).getBytes(StandardCharsets.UTF_8);
+            out.write(encryptedBytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void decryptText(String text, OutputStream out) {
+        try {
+            byte[] decryptedBytes = decrypt(text).getBytes(StandardCharsets.UTF_8);
+            out.write(decryptedBytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+//    public void encryptFile(InputStream in, OutputStream out) {
+//        try (in) {
+//            byte[] encryptedBytes = encrypt(text).getBytes(StandardCharsets.UTF_8);
+//            out.write(encryptedBytes);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+
+    public void encrypt(InputStream in, OutputStream out) {
+
     }
 }
