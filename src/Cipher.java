@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -11,7 +12,7 @@ public interface Cipher {
     String decrypt(String cipherText);
 //    void encryptFile(String fileName);
 //    void decryptFile(String fileName);
-//    void save();
+    void save(String fileName) throws IOException;
 //    Cipher load();
 
     // good to have byte[] versions and inputstream ones

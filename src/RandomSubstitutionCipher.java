@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.random.*;
@@ -76,5 +77,16 @@ public class RandomSubstitutionCipher extends AbstractCipher implements Cipher {
             }
         }
         return result.toString();
+    }
+
+    @Override
+    public void save(String fileName) throws IOException {
+        StringBuilder encryptedAlphabet = new StringBuilder();
+        for (Character c: encryptMap.keySet()) {
+            encryptedAlphabet.append(decryptMap.get(c));
+        }
+        String uppercaseEncryptedAlphabet = encryptedAlphabet.toString().toUpperCase();
+        String content = "RANDOM" + System.lineSeparator() + uppercaseEncryptedAlphabet;
+        writeFile(fileName, content);
     }
 }

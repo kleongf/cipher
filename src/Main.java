@@ -16,10 +16,14 @@ void main() throws IOException {
     IO.println(cipher.encrypt(test3));
     IO.println(cipher.decrypt(enc));
 
+    cipher.save("random.txt");
+
     VigenereCipher cipher2 = new VigenereCipher("abc");
     String enc2 = cipher2.encrypt("tomorrow and tomorrow and tomorrow creeps in this petty pace from day to day");
     IO.println(enc2);
     IO.println(cipher2.decrypt(enc2));
+
+    cipher2.save("vigenere.txt");
 
     IO.println(Chunker.read("/Users/kevin/IdeaProjects/Cipher/src/foo.txt", 126));
     RSACipher cipherRSA = new RSACipher();
@@ -38,6 +42,11 @@ void main() throws IOException {
     }
     cipherRSA.encryptFile("/Users/kevin/IdeaProjects/Cipher/src/foo.txt", "/Users/kevin/IdeaProjects/Cipher/src/foo_encrypted.txt");
     cipherRSA.decryptFile("/Users/kevin/IdeaProjects/Cipher/src/foo_encrypted.txt", "/Users/kevin/IdeaProjects/Cipher/src/foo_decrypted.txt");
+
+    cipherRSA.save("rsa.txt");
+
+    CaesarCipher caesar = new CaesarCipher(3);
+    caesar.save("caesar.txt");
 
 //    • --caesar <shift_param>: Create a new Caesar cipher with the given integer shift parameter.
 //• --random: Create a new monoalphabetic substitution cipher with a randomly chosen permutation of the

@@ -24,7 +24,8 @@ public class RSACipher extends AbstractCipher implements Cipher {
         for (int i = 0; i < maxIterations; i++) {
             this.p = generatePrime();
             this.q = generatePrime();
-            if (e.gcd(p.subtract(BigInteger.ONE)).equals(BigInteger.ONE) && e.gcd(q.subtract(BigInteger.ONE)).equals(BigInteger.ONE)) {
+            if (e.gcd(p.subtract(BigInteger.ONE)).equals(BigInteger.ONE) &&
+                    e.gcd(q.subtract(BigInteger.ONE)).equals(BigInteger.ONE)) {
                 this.n = this.p.multiply(this.q);
                 this.totient = this.p.subtract(BigInteger.ONE).multiply(this.q.subtract(BigInteger.ONE));
                 this.d = e.modInverse(totient);
@@ -123,5 +124,11 @@ public class RSACipher extends AbstractCipher implements Cipher {
     @Override
     public String decrypt(String cipherText) {
         return "";
+    }
+
+    @Override
+    public void save(String fileName) throws IOException {
+        String content = "RSA" + System.lineSeparator() + d + System.lineSeparator() + e + System.lineSeparator() + n;
+        writeFile(fileName, content);
     }
 }

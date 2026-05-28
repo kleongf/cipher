@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class VigenereCipher extends AbstractCipher implements Cipher {
     private final String key;
 
@@ -41,5 +43,11 @@ public class VigenereCipher extends AbstractCipher implements Cipher {
             }
         }
         return result.toString();
+    }
+
+    @Override
+    public void save(String fileName) throws IOException {
+        String content = "VIGENERE" + System.lineSeparator() + key.toUpperCase();
+        writeFile(fileName, content);
     }
 }

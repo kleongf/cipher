@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class CaesarCipher extends AbstractCipher implements Cipher {
     private final int shiftParam;
 
@@ -35,5 +37,16 @@ public class CaesarCipher extends AbstractCipher implements Cipher {
             }
         }
         return result.toString();
+    }
+
+    @Override
+    public void save(String fileName) throws IOException {
+        StringBuilder encryptedAlphabet = new StringBuilder();
+        for (int i = 0; i < 26; i++) {
+            encryptedAlphabet.append((char) ((i + shiftParam) % 26 + 'A'));
+        }
+
+        String content = "MONO" + System.lineSeparator() + encryptedAlphabet;
+        writeFile(fileName, content);
     }
 }
