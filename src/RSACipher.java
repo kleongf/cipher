@@ -11,7 +11,7 @@ public class RSACipher extends AbstractCipher implements Cipher {
     private static final int bitLength = 512;
     private static final int chunkSize = 126;
     private static final int maxIterations = 1000;
-    private int encryptedChunkSize = 128;
+    private static final int encryptedChunkSize = 128;
 
     public BigInteger n;
     public BigInteger p;
@@ -35,67 +35,12 @@ public class RSACipher extends AbstractCipher implements Cipher {
         this.n = this.p.multiply(this.q);
         this.totient = this.p.subtract(BigInteger.ONE).multiply(this.q.subtract(BigInteger.ONE));
         this.d = e.modInverse(totient);
-        // this.encryptedChunkSize = (n.bitLength() + 7) / 8;
-//        for (int i = 0; i < maxIterations; i++) {
-//            this.p = generatePrime();
-//            this.q = generatePrime();
-//            if (calculateGCD(e, p - 1) == 1 && calculateGCD(e, q - 1) == 1) {
-//                this.n = this.p * this.q;
-//                this.totient = (this.p - 1) * (this.q - 1);
-//                this.d = calculateD(totient, e);
-//                return;
-//            }
-//        }
-//        this.n = this.p * this.q;
-//        this.totient = (this.p - 1) * (this.q - 1);
-//        this.d = calculateD(totient, e);
     }
-
-//    private static int calculateGCD(int a, int b) {
-//        while (b > 0) {
-//            int next_b = a % b;
-//            a = b;
-//            b = next_b;
-//        }
-//        return a;
-//    }
-
-    // so the error is interesting: it's overflowing and wrapping around
 
 
     private static BigInteger generatePrime() {
-//        BigInteger test = new BigInteger(bitLength, certainty, new Random());
-//        test.g
-//        test.modInverse() // bruh i couldve used this i guess bru
         return new BigInteger(bitLength, certainty, new Random());
     }
-
-//    private static int calculateD(int totient, int e) {
-//        int[] remainder = {totient, e};
-//        int[] kTotient = {1, 0};
-//        int[] kE = {0, 1};
-//
-//        while (remainder[1] > 0) {
-//            int quotient = remainder[0] / remainder[1];
-//
-//            int tempR = remainder[1];
-//            remainder[1] = remainder[0] % tempR;
-//            remainder[0] = tempR;
-//
-//            int tempT = kTotient[0];
-//            kTotient[0] = kTotient[1];
-//            kTotient[1] = tempT - quotient * kTotient[1];
-//
-//            int tempE = kE[0];
-//            kE[0] = kE[1];
-//            kE[1] = tempE - quotient * kE[1];
-//        }
-//
-//        if (kE[0] < 0) {
-//            kE[0] += totient;
-//        }
-//        return kE[0];
-//    }
 
     public BigInteger encrypt(byte[] plainChunk) {
         BigInteger convertedChunk = new BigInteger(1, plainChunk);
