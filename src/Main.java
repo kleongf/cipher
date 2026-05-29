@@ -1,3 +1,5 @@
+import cipher.ciphers.CaesarCipher;
+
 void main() throws IOException {
     String test = "Hi's";
     IO.println(test.toLowerCase());
@@ -48,10 +50,9 @@ void main() throws IOException {
     CaesarCipher caesar = new CaesarCipher(3);
     caesar.save("caesar.txt");
 
-    caesar.encryptText("hallo world", System.out);
-    caesar.encryptText("hallo world", new FileOutputStream("encryptedhalloworld.txt"));
-
     caesar.decryptFile(new FileInputStream("encryptedhalloworld.txt"), new FileOutputStream("decryptedhalloworld.txt"));
+    caesar.encryptString("ahhhh", new FileOutputStream("ahhh.txt"));
+    caesar.encryptString("ahhhh", System.out);
 
 //    • --caesar <shift_param>: Create a new Caesar cipher with the given integer shift parameter.
 //• --random: Create a new monoalphabetic substitution cipher with a randomly chosen permutation of the

@@ -10,8 +10,8 @@ import java.util.Arrays;
 import java.util.ArrayList;
 
 public abstract class BinaryCipher implements Cipher {
-    private int encryptChunkSize; // 126
-    private int decryptChunkSize; // 128
+    private final int encryptChunkSize = 126;
+    private final int decryptChunkSize = 128;
     
     public static ArrayList<byte[]> chunkString(String input, int bufferSize) {
         ArrayList<byte[]> chunks = new ArrayList<>();
