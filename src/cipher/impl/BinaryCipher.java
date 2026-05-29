@@ -1,4 +1,6 @@
-package cipher;
+package cipher.impl;
+
+import cipher.Cipher;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

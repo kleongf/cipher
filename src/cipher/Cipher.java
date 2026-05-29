@@ -12,4 +12,5 @@ public interface Cipher {
     void decryptFile(InputStream in, OutputStream out) throws IOException;
 
     void save(String fileName) throws IOException;
+    // Cipher load(String fileName) throws IOException;
 }

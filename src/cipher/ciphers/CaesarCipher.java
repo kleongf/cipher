@@ -1,4 +1,6 @@
-package cipher;
+package cipher.ciphers;
+
+import cipher.impl.SubstitutionCipher;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -44,6 +46,12 @@ public class CaesarCipher extends SubstitutionCipher {
 
     @Override
     public void save(String fileName) throws IOException {
+        StringBuilder encryptedAlphabet = new StringBuilder();
+        for (int i = 0; i < 26; i++) {
+            encryptedAlphabet.append((char) ((i + shiftParam) % 26 + 'A'));
+        }
 
+        String content = "MONO" + System.lineSeparator() + encryptedAlphabet;
+        writeFile(fileName, content);
     }
 }
