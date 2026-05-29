@@ -57,6 +57,7 @@ public class CaesarCipher extends AbstractCipher implements Cipher {
 
     public void encryptText(String text, OutputStream out) throws IOException {
         // if (out instanceof FileOutputStream) todo: ooh very cool idea, check first before using (out) or somethign
+
         try {
             byte[] encryptedBytes = encrypt(text).getBytes(StandardCharsets.UTF_8);
             out.write(encryptedBytes);
@@ -78,7 +79,20 @@ public class CaesarCipher extends AbstractCipher implements Cipher {
         }
     }
 
-    public void encryptFile(InputStream in, OutputStream out) {
+    public void encryptFile(InputStream in, OutputStream out) throws IOException {
+        // i still want this to be better... minimize repetitive code
+        // however idk if it gets much better than this?
+        try {
+            byte[] encryptedBytes = encrypt(new String(in.readAllBytes(), StandardCharsets.UTF_8)).getBytes(StandardCharsets.UTF_8);
+            out.write(encryptedBytes);
+        } finally {
+            out.flush();
+            in.close();
+            if (out != System.out) {
+                out.close();
+            }
+        }
+
         try (in) {
             byte[] encryptedBytes = encrypt(new String(in.readAllBytes(), StandardCharsets.UTF_8)).getBytes(StandardCharsets.UTF_8);
             out.write(encryptedBytes);

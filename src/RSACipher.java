@@ -92,17 +92,30 @@ public class RSACipher extends AbstractCipher implements Cipher {
 
     // the only exception is the RSA cipher. if the cipher type is rsa, then the inputsteams and outputstreams are buffered.
     // not sure what the best way to do this is...
+    // ooh this looks like a smart way to do it, actually no its not since it has out either way
+    // todo: the actual smartest way is probably at the end, check if it's a buffered output stream, and if so, call close()
+    // wait but here i created a new one? so it might be okay to do it like this?
 
     public void decryptFile(InputStream in, OutputStream out) throws IOException {
-        // ooh this looks like a smart way to do it, actually no its not since it has out either way
-        // todo: the actual smartest way is probably at the end, check if it's a buffered output stream, and if so, call close()
-        // wait but here i created a new one? so it might be okay to do it like this?
-        try (InputStream bufferedIn = new BufferedInputStream(in);
-             OutputStream bufferedOut = new BufferedOutputStream(out)) {
-            // wait but
-        }
+        // We don't put 'out' in the try-header so we don't accidentally close System.out
+        BufferedInputStream bufferedIn = new BufferedInputStream(in);
+        BufferedOutputStream bufferedOut = new BufferedOutputStream(out);
 
+        try {
+            // Your decryption logic here
+            // ...
+        } finally {
+            bufferedOut.flush(); // Ensure data is written
+            // Only close the input if you're sure you want to
+            bufferedIn.close();
+            // DO NOT call bufferedOut.close() if out is System.out
+            if (out != System.out) {
+                bufferedOut.close();
+            }
+        }
     }
+
+
     public void decryptFile(String inFile, String outFile) {
         byte[] buffer = new byte[encryptedChunkSize];
         try (InputStream in = new BufferedInputStream(new FileInputStream(inFile));
